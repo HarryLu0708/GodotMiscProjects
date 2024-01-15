@@ -1,13 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4kavi5pqtguu"]
+[gd_scene load_steps=11 format=3 uid="uid://b4kavi5pqtguu"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_pc1x6"]
 [ext_resource type="PackedScene" uid="uid://cpw3aqs7uvmt3" path="res://Coin.tscn" id="2_cj7h6"]
 [ext_resource type="Texture2D" uid="uid://cp3knup3iiv4x" path="res://coin_dash_assets/assets/grass.png" id="2_nafkv"]
 [ext_resource type="PackedScene" uid="uid://dgr4bycvpfp4b" path="res://Player.tscn" id="3_36olj"]
+[ext_resource type="PackedScene" uid="uid://cothhis8vaday" path="res://Powerup.tscn" id="3_gpfie"]
+[ext_resource type="PackedScene" uid="uid://dlggphbpfqngf" path="res://hud.tscn" id="5_s1nnd"]
+[ext_resource type="AudioStream" uid="uid://bdkbcr3j823hr" path="res://coin_dash_assets/assets/audio/Coin.wav" id="6_ccfl4"]
+[ext_resource type="AudioStream" uid="uid://dp4jxnpytfkdv" path="res://coin_dash_assets/assets/audio/EndSound.wav" id="7_jax8n"]
+[ext_resource type="AudioStream" uid="uid://d2dv4sretxber" path="res://coin_dash_assets/assets/audio/Level.wav" id="8_j5gls"]
+[ext_resource type="AudioStream" uid="uid://djlhk8q373wgk" path="res://coin_dash_assets/assets/audio/Powerup.wav" id="9_osfs0"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_pc1x6")
 coin_scene = ExtResource("2_cj7h6")
+powerup_scene = ExtResource("3_gpfie")
+
+[node name="HUD" parent="." instance=ExtResource("5_s1nnd")]
 
 [node name="Background" type="TextureRect" parent="."]
 anchors_preset = 15
@@ -25,3 +34,25 @@ stretch_mode = 1
 [node name="Player" parent="." instance=ExtResource("3_36olj")]
 
 [node name="GameTimer" type="Timer" parent="."]
+
+[node name="CoinSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_ccfl4")
+
+[node name="EndSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_jax8n")
+
+[node name="LevelSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_j5gls")
+
+[node name="PowerupTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="PowerUpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_osfs0")
+
+[connection signal="start_game" from="HUD" to="." method="_on_hud_start_game"]
+[connection signal="hurt" from="Player" to="." method="_on_player_hurt"]
+[connection signal="pickup" from="Player" to="." method="_on_player_pickup"]
+[connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
+[connection signal="timeout" from="PowerupTimer" to="." method="_on_powerup_timer_timeout"]

@@ -23,10 +23,13 @@ func die():
 func _on_area_entered(area):
 	if area.is_in_group("coins"):
 		area.pickup()
-		pickup.emit()
+		pickup.emit("coin")
 	if area.is_in_group("obstacles"):
 		hurt.emit()
 		die()
+	if area.is_in_group("powerup"):
+		area.pickup()
+		pickup.emit("powerup")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
