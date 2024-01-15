@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://coqcsbf6uobys"]
+
+[ext_resource type="Script" path="res://SignalStudy.gd" id="1_11cnx"]
+[ext_resource type="Texture2D" uid="uid://c6ek6kwid5tcx" path="res://icon.svg" id="1_mwr8s"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_11cnx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(870, 316)
+texture = ExtResource("1_mwr8s")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 291.0
+offset_top = 294.0
+offset_right = 340.0
+offset_bottom = 325.0
+text = "Click!"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
